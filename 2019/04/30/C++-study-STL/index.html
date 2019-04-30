@@ -1,0 +1,92 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"><meta name="format-detection" content="telephone=no"><meta name="format-detection" content="email=no"><meta name="description"><meta name="keywords" content="Hexo, Gruntjs, Nodejs, Reactjs, Vuejs"><title>STL基础 - Star</title><link rel="stylesheet" href="/css/main_style.min.css"><link rel="icon" href="/favicon.ico"></head><body><input id="navi" type="checkbox"><ul class="main-navication"><li><a href="/"><span>Home</span></a></li><li><a href="https://github.com"><span>Github</span></a></li></ul><div class="wrapper" id="wrap"><div class="post-header"><label class="navi-button light" for="navi">MENU</label><img class="background" src="/img/post_background.jpg"><div class="post-title"><h1 class="title">STL基础</h1><ul class="meta"><li><i class="icon icon-author"></i>Lucifer</li><li><i class="icon icon-clock"></i>7 Minutes</li><li><i class="icon icon-calendar"></i>April 30, 2019</li></ul></div></div><div class="article-content" style="max-width:800px"><h3 id="什么时候用STL"><a href="#什么时候用STL" class="headerlink" title="什么时候用STL"></a>什么时候用STL</h3><p>当你需要在程序中用到堆、栈、队列、链表等一些基本的算法，但又不想去实现数据结构教科书中的那些繁琐的算法，那么STL是一个很好的选择。并且STL作为一种标准，便于交流。</p>
+<h3 id="STL简介"><a href="#STL简介" class="headerlink" title="STL简介"></a>STL简介</h3><p>STL(standard template library)，即标准模板库，是高效的C++程序库。包括六大组件，其中3个主要组件：算法(algorithm)、容器(container)、迭代器(iterator)和3个辅助组件：配置器(allocators)、适配器(adapters)、函数对象(function object)。STL中，几乎所有的代码都采用了模板类和模板函数的方式，这相比于传统的由函数和类组成的库来说提供了更好的代码重用机制。</p>
+<h3 id="STL的主要头文件"><a href="#STL的主要头文件" class="headerlink" title="STL的主要头文件"></a>STL的主要头文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;deque&gt;		deque定义</span><br><span class="line">&lt;vector&gt;	vector定义</span><br><span class="line">&lt;list&gt;		list定义</span><br><span class="line">&lt;map&gt;		map、multimap定义</span><br><span class="line">&lt;queue&gt;		queue、priority_queue定义</span><br><span class="line">&lt;set&gt;		set、multiset定义</span><br><span class="line">&lt;stack&gt;		stack定义</span><br><span class="line">&lt;algorithm&gt;	和&lt;numeric&gt;定义了STL通用算法</span><br><span class="line">&lt;numeric&gt;	和&lt;algorithm&gt;定义了STL通用算法</span><br><span class="line">&lt;iterator&gt;	所有在容器类型中定义的迭代器的祖先定义</span><br><span class="line">&lt;functional&gt;	通用函数对象的定义</span><br><span class="line">&lt;utility&gt;	定义了pair，定义了基本的iterator概念</span><br><span class="line">&lt;memory&gt;	主要是智能指针auto_ptr的定义和一些全局临时内存处理函数的定义；头文件包含了另一个重要头文件&lt;xmemory&gt;，主要是空间配置器allocator的定义</span><br></pre></td></tr></table></figure>
+<h3 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h3><p>在实际的开发过程中，数据结构本身的重要性不会逊于操作于数据结构的算法的重要性，当程序中存在着对时间要求很高的部分时，数据结构的选择就显得更加重要。</p>
+<p>经典的数据结构数量有限，但是我们常常重复着一些为了实现向量、链表等结构而编写的代码，这些代码都十分相似，只是为了适应不同数据的变化而在细节上有所出入。STL容器就为我们提供了这样的方便，它允许我们重复利用已有的实现构造自己的特定类型下的数据结构，通过设置一些模版类，STL容器对最常用的数据结构提供了支持，这些模板的参数允许我们指定容器中元素的数据类型，可以将我们许多重复而乏味的工作简化。</p>
+<p>容器部分主要由头文件<code>&lt;vector&gt;,&lt;list&gt;,&lt;deque&gt;,&lt;set&gt;,&lt;map&gt;,&lt;stack&gt;和&lt;queue&gt;</code>组成。对于常用的一些容器和容器适配器（可以看作由其它容器实现的容器），可以通过下表总结一下它们和相应头文件的对应关系。</p>
+<table>
+<thead>
+<tr>
+<th>数据结构</th>
+<th>描述</th>
+<th>实现头文件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>向量（vector）</td>
+<td>连续存储的元素</td>
+<td>vector</td>
+</tr>
+<tr>
+<td>列表（list）</td>
+<td>由节点组成的双向链表，每个节点包含着一个元素</td>
+<td>list</td>
+</tr>
+<tr>
+<td>双队列（deque）</td>
+<td>连续存储的指向不同元素的指针所组成的数组</td>
+<td>deque</td>
+</tr>
+<tr>
+<td>集合（set）</td>
+<td>由节点组成的红黑树每个节点都包含着一个元素，节点之间以某种作用于元素对的谓词排列，没有两个不同的元素能够拥有相同的次序</td>
+<td>set</td>
+</tr>
+<tr>
+<td>多重集合（multiset）</td>
+<td>允许存在两个次序相等的元素的集合</td>
+<td>set</td>
+</tr>
+<tr>
+<td>栈（stack）</td>
+<td>后进先出的值的排列</td>
+<td>stack</td>
+</tr>
+<tr>
+<td>队列（queue）</td>
+<td>先进先出的值的排列</td>
+<td>queue</td>
+</tr>
+<tr>
+<td>优先队列（priority_queue）</td>
+<td>元素的次序是由作用于所存储的值对上的某种谓词决定的一种队列</td>
+<td>queue</td>
+</tr>
+<tr>
+<td>映射（map）</td>
+<td>由{键、值}对组成的集合，以某种作用于键对上的谓词排列</td>
+<td>map</td>
+</tr>
+<tr>
+<td>多重映射（multimap）</td>
+<td>允许键对有相等的次序的映射</td>
+<td>map</td>
+</tr>
+</tbody>
+</table>
+<h3 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h3><p>软件设计有一个基本原则，所有的问题都可以通过引进一个间接层来简化，这种简化在STL中就是用迭代器来完成的。概括来说，迭代器在STL中用来将算法和容器联系起来，起着一种黏和剂的作用。几乎STL提供的所有算法都是通过迭代器存取元素序列进行工作的，每一个容器都定义了其本身所专有的迭代器，用以存取容器中的元素。</p>
+<p>迭代器部分主要由头文件<code>&lt;utility&gt;,&lt;iterator&gt;和&lt;memory&gt;组成。&lt;utility&gt;</code>是一个很小的头文件，它包括了贯穿使用在STL中的几个模板的声明，<code>&lt;iterator&gt;</code>中提供了迭代器使用的许多方法，而对于<code>&lt;memory&gt;</code>的描述则十分的困难，它以不同寻常的方式为容器中的元素分配存储空间，同时也为某些算法执行期间产生的临时对象提供机制,<code>&lt;memory&gt;</code>中的主要部分是模板类allocator，它负责产生所有容器中的默认分配器。</p>
+<h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><h3 id="STL中的容器"><a href="#STL中的容器" class="headerlink" title="STL中的容器"></a>STL中的容器</h3><h4 id="向量-vector"><a href="#向量-vector" class="headerlink" title="向量(vector)"></a>向量(vector)</h4><p>一块连续的线性存储空间。它是顺序容器，支持随机访问。vector是一块连续分配的内存，从数据安排的角度来说，和数组极其相似，不同的地方就是：数组是静态分配空间，一旦分配了空间的大小，就不可以再改变了；而vector是动态分配空间，随着元素地不断插入，它会按照自身的一套机制不断扩充自身的容量。每次容器的增长，并不是在原有连续的内存空间后再进行简单的叠加，而是重新申请一块更大的新的内存，并把现有容器中的元素逐个复制过去，然后销毁旧的内存。这个时候，如果原先有一个迭代器指向的是旧的内存，而旧的内存已经销毁了，则此时迭代器已经失效了。所以当操作容器时，迭代器要及时使用，而不要在对容器进行插入等操作后继续使用过时的迭代器。</p>
+<h4 id="列表-list"><a href="#列表-list" class="headerlink" title="列表(list)"></a>列表(list)</h4><p>双向循环链表。不支持对元素的任意存取(即不通过下标[]存取)。List中提供成员函数和vector类似，有begin、end、rbegin、rend、push_back、pop_back，同时list提供对表首元素的操作push_front、pop_front，这是vector不具备的。和vector另一点不同的是，list的迭代器不会存在失效的情况，它不像vector会保留备份空间，在超过容量额度时重新全部分配内存，导致迭代器失效；list没有备份空间的概念，插入一个元素就申请一个元素的空间，所以它的迭代器不会失效。</p>
+<h4 id="双队列-deque"><a href="#双队列-deque" class="headerlink" title="双队列(deque)"></a>双队列(deque)</h4><p>双向开口的连续线性存储空间。从容器的两端都能进行元素的插入和删除操作。Deque虽然说是连续线性存储空间，但这种连续性只是表面上的，或者说是一种假象。实际上的情况是，它的内存存储区是动态分配的，它在堆上分配了一块一块的动态存储区，每一块动态存储区本身是连续的，deque自身的机制把这一块一块的存储区虚拟地连在一起，给人一种假象，好像整个deque的存储是一个整的连续性的空间。正是因为这样，所以deque没有vector那种所谓容量的概念。它首次插入一个元素，默认会动态分配512字节空间，当这512字节空间用完后，它会再动态分配另外512字节空间，然后把这两个动态空间虚拟地连在一起，让使用者以为这是连续的1024字节空间一样。Deque的这种设计，使得它具有比vector复杂得多的架构、复杂得多的算法和复杂得多的迭代器设计等，而这种复杂度和简单的vector是不在一个数量级别上的。这就使得deque的效率比vector低得多。所以非不得已，尽量用vector和list，而不要用deque。Deque除了双向进出，让编程者有更多选择性、更多灵活性，以及编程时使用非常方便之外，其实没有带来多少好处。和效率的巨大损失相比，它的优点有些得不偿失。</p>
+<h4 id="栈-stack"><a href="#栈-stack" class="headerlink" title="栈(stack)"></a>栈(stack)</h4><p>先进后出的数据结构。Stack是建立在deque数据结构基础上的。它是一种先进后出(First In Last Out, FILO)的数据结构。除了在stack的最顶端压栈来操作元素外，没有任何办法来存取stack中的元素。Stack不允许对容器的遍历操作。</p>
+<h4 id="队列-queue"><a href="#队列-queue" class="headerlink" title="队列(queue)"></a>队列(queue)</h4><p>先进先出的数据结构。Queue是建立在deque数据结构基础上的，这里的queue对应在数据结构和算法中提到的队列的概念，它是一种先进先出(First In First Out,FIFO)的数据结构。除了在queue的最顶端和最底端操作元素外，没有任何办法来存取queue中的元素。Queue不允许对容器的遍历操作。</p>
+<h4 id="优先队列-priority-queue"><a href="#优先队列-priority-queue" class="headerlink" title="优先队列(priority_queue)"></a>优先队列(priority_queue)</h4><p>按权值决定出列顺序的数据结构。Priority_queue(优先队列)是建立在vector数据结构基础上的，priority_queue是有优先权值queue，它只允许在容器的两端操作元素，但它并非像queue那样先进先出，它设定了一个优先权，优先权大的先出。除了在priority_queue的最顶端和最底端操作元素外，没有任何办法来存取priority_queue中的元素。Priority_queue不允许对容器的遍历操作。</p>
+<h4 id="集合-set"><a href="#集合-set" class="headerlink" title="集合(set)"></a>集合(set)</h4><p>所有元素都会根据键值自动被排序，键就是值，值就是键。Set(集合)是一种包含已排序对象的关联容器。Set的特点是，所有元素都会根据键值自动被排序。知道关联容器是有键和值的，而set的键就是值，值就是键。</p>
+<h4 id="多重集合-multiset"><a href="#多重集合-multiset" class="headerlink" title="多重集合(multiset)"></a>多重集合(multiset)</h4><p>支持重复键值的set。</p>
+<h4 id="映射-map"><a href="#映射-map" class="headerlink" title="映射(map)"></a>映射(map)</h4><p>由{键,值}对组成的集合。Map是一种包含已排序对象的关联容器。Map的特点是，所有元素都会根据键值自动被排序。知道关联容器是有键和值的，和set不同，map的键是键，值是值。需要注意，关联容器的键是不允许被改变的，所以map的键是不能被修改的，但它的值是可以修改的。Map不允许两个元素具有相同的键。Map采用的是非线性链表结构—-树，所以它的迭代器不会像vector容器的迭代器那样因为重新分配存储区而失效。Map的键和值以pair形式存在。</p>
+<h4 id="多重映射-multimap"><a href="#多重映射-multimap" class="headerlink" title="多重映射(multimap)"></a>多重映射(multimap)</h4><p>支持重复键值的map。</p>
+</div><div class="article-meta" style="max-width:800px"><div class="tags"><i class="icon icon-tag"></i><ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/STL/">STL</a><span class="tag-list-count">1</span></li></ul></div></div><div class="article-comment" style="max-width:800px"><div class="ds-thread" id="ds-thread" data-thread-key="cjv38yzvc0009bsxmrx5nea2e" data-title="STL基础" data-url="http://yoursite.com/2019/04/30/C++-study-STL/" site-name="ueibo"></div><script>var siteName = document.getElementById('ds-thread').getAttribute('site-name');
+var duoshuoQuery = {short_name: siteName};
+(function() {
+  var ds = document.createElement('script');
+  ds.type = 'text/javascript';ds.async = true;
+  ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+  ds.charset = 'UTF-8';
+  (document.getElementsByTagName('head')[0] 
+  || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();</script></div><ul class="navication"><li class="home"><a href="/"><i class="icon icon-home"></i></a></li><li><a href="/2019/01/26/C++-case-interview3/"><i class="icon icon-arror-right"></i></a></li></ul><div class="page-footer"><div class="top"><ul class="social"><li><a href="https://github.com/MooBlue" title="Github" target="_blank"><i class="icon icon-github"></i></a></li></ul></div><div class="bottom"><p class="copyright">© 2019 Star<br><small>POWER BY <a href="https://hexo.io" target="_blank">HEXO</a></small><small>, THEME BY <a href="https://github.com/BoizZ/hexo-theme-laughing" target="_blank">LAUGHING</a></small></p></div></div></div><script>var wrap = document.getElementById('wrap');
+window.onload = function () {
+  wrap.className += ' done';
+}</script></body></html>
