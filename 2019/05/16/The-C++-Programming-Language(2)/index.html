@@ -8,14 +8,21 @@
 <p>比如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">void main()</span><br><span class="line">&#123;</span><br><span class="line">char a = 1;</span><br><span class="line">char c[] = &quot;1234567890&quot;;</span><br><span class="line">char *p =&quot;1234567890&quot;;</span><br><span class="line">a = c[1];</span><br><span class="line">a = p[1];</span><br><span class="line">return;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>对应的汇编代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">10: a = c[1];</span><br><span class="line">00401067 8A 4D F1 mov cl,byte ptr [ebp-0Fh]</span><br><span class="line">0040106A 88 4D FC mov byte ptr [ebp-4],cl</span><br><span class="line">11: a = p[1];</span><br><span class="line">0040106D 8B 55 EC mov edx,dword ptr [ebp-14h]</span><br><span class="line">00401070 8A 42 01 mov al,byte ptr [edx+1]</span><br><span class="line">00401073 88 45 FC mov byte ptr [ebp-4],al</span><br></pre></td></tr></table></figure></p>
 <p>第一种在读取时直接就把字符串中的元素读到寄存器cl中，而第二种则要先把指针值读到edx中，在根据edx读取字符，显然慢了。</p>
-<h3 id="归纳："><a href="#归纳：" class="headerlink" title="归纳："></a>归纳：</h3><p>堆和栈的区别可以用如下的比喻来看出：<br>使用栈就象我们去饭馆里吃饭，只管点菜（发出申请）、付钱、和吃（使用），吃饱了就走，不必理会切菜、洗菜等准备工作和洗碗、刷锅等扫尾工作，他的好处是快捷，但是自由度小。<br>使用堆就象是自己动手做喜欢吃的菜肴，比较麻烦，但是比较符合自己的口味，而且自由度大。</p>
-<h3 id="小结："><a href="#小结：" class="headerlink" title="小结："></a>小结：</h3><p>1.程序的运行场所是内存，栈和堆是进程的虚拟内存中的两部分区域。<br>当程序被执行时，程序代码，你所创建的变量、常量等都会被压入栈空间里，栈是程序代码的执行区域。栈的内存地址是连续的且被一一记录，所以说当你创建了一个变量(比如int var = 1)，我们就可以通过var这个变量来访问变量的内容。在这里，var就存放在栈中，它的地址已经默认被编译器计算好了，调用过程也不需要你涉及到有关地址的操作。更直观的感受是数组，数组里的元素在栈里面是连续排放的，相邻两个元素的地址相差1。<br>而堆是不同于栈的另一部分区域，系统会给每个程序分配一部分栈空间让他们能够运行起来，问题就是栈空间必然存在不够用的问题，而堆不属于程序，堆是独立的，是公用的。只要你malloc(sizeof(SIZE_YOU_WANT))，就可以得到相应一部分的堆空间。</p>
-<p>2.有栈，为什么用堆？<br>栈里面的东西有生命周期，说俗点就是变量作用域，你在函数内部创建一个变量，函数调用结束这个变量就没了。而堆里面的东西独立于你的程序，malloc()之后，除非你free()掉，否则一直存在。</p>
-<p>3.为什么用堆少？<br>麻烦！</p>
-<p>4.有什么要注意？<br>堆里面申请的东西，是随机分配的，不像栈里面的地址都已经计算好了。所以申请了堆空间之后一定要创建一个指针保存你说申请到的堆空间的地址。不然就找不到你申请的空间了。既然涉及到指针，请注意用之前检查一下指针空不空的问题。堆空间的东西申请好，在用完之后一定要free()掉，以防止堆溢出。</p>
-<p>5、进程、线程与堆、栈<br>现在是多任务系统。每个进程是资源（不含处理器资源）分配的基本单位。每个进程含若干线程。线程是调度执行的基本单位。同一个进程的多个线程可以共享所属进程的资源。程序员可以进行同步控制（多线程编程）。每个进程有一个或几个堆。这要看不同的OS了。程序员要在堆中分配/释放空间，需要malloc/free这样的显式操作。每个线程有一个私有资源，那就是栈。函数调用时，要把返回地址和参数入栈。被调函数执行时，要把参数取出来，赋给形参。被调函数执行完后还要把返回地址取出来，跳回去。栈是自动实现的，不需要程序员干预。（因为编译器实现了）。局部变量也位于栈。</p>
-<p>6、内存管理分页机制<br>Windows / Linux采用段页式。但这只是内存管理方法。跟堆栈是两回事啊。并不矛盾。</p>
-</div><div class="article-meta" style="max-width:800px"><div class="tags"><i class="icon icon-tag"></i><ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">4</span></li></ul></div></div><div class="article-comment" style="max-width:800px"><div class="ds-thread" id="ds-thread" data-thread-key="cjw1uuosv0001h0xm5ms2ae6z" data-title="堆与栈间的区别" data-url="http://yoursite.com/2019/05/16/The-C++-Programming-Language(2)/" site-name="ueibo"></div><script>var siteName = document.getElementById('ds-thread').getAttribute('site-name');
+<h3 id="归纳："><a href="#归纳：" class="headerlink" title="归纳："></a>归纳：</h3><p>堆和栈的区别可以用如下的比喻来看出：</p>
+<p>使用栈就象我们去饭馆里吃饭，只管点菜（发出申请）、付钱、和吃（使用），吃饱了就走，不必理会切菜、洗菜等准备工作和洗碗、刷锅等扫尾工作，他的好处是快捷，但是自由度小。<br>使用堆就象是自己动手做喜欢吃的菜肴，比较麻烦，但是比较符合自己的口味，而且自由度大。</p>
+<h3 id="小结："><a href="#小结：" class="headerlink" title="小结："></a>小结：</h3><p>1.程序的运行场所是内存，栈和堆是进程的虚拟内存中的两部分区域。</p>
+<p>当程序被执行时，程序代码，你所创建的变量、常量等都会被压入栈空间里，栈是程序代码的执行区域。栈的内存地址是连续的且被一一记录，所以说当你创建了一个变量(比如int var = 1)，我们就可以通过var这个变量来访问变量的内容。在这里，var就存放在栈中，它的地址已经默认被编译器计算好了，调用过程也不需要你涉及到有关地址的操作。更直观的感受是数组，数组里的元素在栈里面是连续排放的，相邻两个元素的地址相差1。<br>而堆是不同于栈的另一部分区域，系统会给每个程序分配一部分栈空间让他们能够运行起来，问题就是栈空间必然存在不够用的问题，而堆不属于程序，堆是独立的，是公用的。只要你malloc(sizeof(SIZE_YOU_WANT))，就可以得到相应一部分的堆空间。</p>
+<p>2.有栈，为什么用堆？</p>
+<p>栈里面的东西有生命周期，说俗点就是变量作用域，你在函数内部创建一个变量，函数调用结束这个变量就没了。而堆里面的东西独立于你的程序，malloc()之后，除非你free()掉，否则一直存在。</p>
+<p>3.为什么用堆少？</p>
+<p>麻烦！</p>
+<p>4.有什么要注意？</p>
+<p>堆里面申请的东西，是随机分配的，不像栈里面的地址都已经计算好了。所以申请了堆空间之后一定要创建一个指针保存你说申请到的堆空间的地址。不然就找不到你申请的空间了。既然涉及到指针，请注意用之前检查一下指针空不空的问题。堆空间的东西申请好，在用完之后一定要free()掉，以防止堆溢出。</p>
+<p>5、进程、线程与堆、栈</p>
+<p>现在是多任务系统。每个进程是资源（不含处理器资源）分配的基本单位。每个进程含若干线程。线程是调度执行的基本单位。同一个进程的多个线程可以共享所属进程的资源。程序员可以进行同步控制（多线程编程）。每个进程有一个或几个堆。这要看不同的OS了。程序员要在堆中分配/释放空间，需要malloc/free这样的显式操作。每个线程有一个私有资源，那就是栈。函数调用时，要把返回地址和参数入栈。被调函数执行时，要把参数取出来，赋给形参。被调函数执行完后还要把返回地址取出来，跳回去。栈是自动实现的，不需要程序员干预。（因为编译器实现了）。局部变量也位于栈。</p>
+<p>6、内存管理分页机制</p>
+<p>Windows / Linux采用段页式。但这只是内存管理方法。跟堆栈是两回事啊。并不矛盾。</p>
+</div><div class="article-meta" style="max-width:800px"><div class="tags"><i class="icon icon-tag"></i><ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">4</span></li></ul></div></div><div class="article-comment" style="max-width:800px"><div class="ds-thread" id="ds-thread" data-thread-key="cjw1v7ucj0001goxm7jcjxbs7" data-title="堆与栈间的区别" data-url="http://yoursite.com/2019/05/16/The-C++-Programming-Language(2)/" site-name="ueibo"></div><script>var siteName = document.getElementById('ds-thread').getAttribute('site-name');
 var duoshuoQuery = {short_name: siteName};
 (function() {
   var ds = document.createElement('script');
