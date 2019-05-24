@@ -29,7 +29,7 @@
 　</em>p = <em>p1;
 　</em>p1 = <em>p2;
 　</em>p2 = <em>p;<br>}<br>　　在swap函数中，p是一个“野”指针，有可能指向系统区，导致程序运行的崩溃。在VC++中DEBUG运行时提示错误“Access Violation”。该程序应该改为：<br>swap( int</em> p1,int<em> p2 )<br>{<br>　int p;<br>　p = </em>p1;<br>　<em>p1 = </em>p2;<br>　*p2 = p;<br>}</p>
-</div><div class="article-meta" style="max-width:800px"><div class="tags"><i class="icon icon-tag"></i><ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">6</span></li></ul></div></div><div class="article-comment" style="max-width:800px"><div class="ds-thread" id="ds-thread" data-thread-key="cjw1c1v08000p7gxmykoyp9ow" data-title="GetMemory" data-url="http://yoursite.com/2019/05/16/The-C++-Programming-Language(3)/" site-name="ueibo"></div><script>var siteName = document.getElementById('ds-thread').getAttribute('site-name');
+</div><div class="article-meta" style="max-width:800px"><div class="tags"><i class="icon icon-tag"></i><ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">6</span></li></ul></div></div><div class="article-comment" style="max-width:800px"><div class="ds-thread" id="ds-thread" data-thread-key="cjw1th9ht000pd8xmk8o0ky0y" data-title="GetMemory" data-url="http://yoursite.com/2019/05/16/The-C++-Programming-Language(3)/" site-name="ueibo"></div><script>var siteName = document.getElementById('ds-thread').getAttribute('site-name');
 var duoshuoQuery = {short_name: siteName};
 (function() {
   var ds = document.createElement('script');
