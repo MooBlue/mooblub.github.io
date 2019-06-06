@@ -1,0 +1,18 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"><meta name="format-detection" content="telephone=no"><meta name="format-detection" content="email=no"><meta name="description"><meta name="keywords" content="Hexo, Gruntjs, Nodejs, Reactjs, Vuejs"><title>进程与线程的区别 - Star</title><link rel="stylesheet" href="/css/main_style.min.css"><link rel="icon" href="/favicon.ico"></head><body><input id="navi" type="checkbox"><ul class="main-navication"><li><a href="/"><span>Home</span></a></li><li><a href="https://github.com"><span>Github</span></a></li></ul><div class="wrapper" id="wrap"><div class="post-header"><label class="navi-button light" for="navi">MENU</label><img class="background" src="/img/post_background.jpg"><div class="post-title"><h1 class="title">进程与线程的区别</h1><ul class="meta"><li><i class="icon icon-author"></i>Lucifer</li><li><i class="icon icon-clock"></i>0 Minutes</li><li><i class="icon icon-calendar"></i>May 21, 2019</li></ul></div></div><div class="article-content" style="max-width:800px"><h2 id="进程与线程的区别"><a href="#进程与线程的区别" class="headerlink" title="进程与线程的区别"></a>进程与线程的区别</h2><p>线程是进程内的一个执行单元，也是进程内的可调度实体。</p>
+<h3 id="调度"><a href="#调度" class="headerlink" title="调度"></a>调度</h3><p>线程作为调度和分配的基本单位，进程作为拥有资源的基本单位。</p>
+<h3 id="并发性"><a href="#并发性" class="headerlink" title="并发性"></a>并发性</h3><p>不仅进程之间可以并发执行，同一个进程的多个线程之间也可以并发执行。</p>
+<h3 id="拥有资源"><a href="#拥有资源" class="headerlink" title="拥有资源"></a>拥有资源</h3><p>进程是拥有资源的一个独立单位，线程不拥有系统资源，但可以访问隶属于进程的资源。</p>
+<h3 id="系统开销"><a href="#系统开销" class="headerlink" title="系统开销"></a>系统开销</h3><p>在创建或撤销进程时，由于系统都有为之分配和回收资源，导致系统的开销明显大于创建或撤销线程时的开销。</p>
+</div><div class="article-meta" style="max-width:800px"><div class="tags"><i class="icon icon-tag"></i><ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">9</span></li></ul></div></div><div class="article-comment" style="max-width:800px"><div class="ds-thread" id="ds-thread" data-thread-key="cjwkfmrjj00093cxmspk355u3" data-title="进程与线程的区别" data-url="http://yoursite.com/2019/05/21/The-C++-Programming-Language(6)/" site-name="ueibo"></div><script>var siteName = document.getElementById('ds-thread').getAttribute('site-name');
+var duoshuoQuery = {short_name: siteName};
+(function() {
+  var ds = document.createElement('script');
+  ds.type = 'text/javascript';ds.async = true;
+  ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+  ds.charset = 'UTF-8';
+  (document.getElementsByTagName('head')[0] 
+  || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();</script></div><ul class="navication"><li class="home"><a href="/"><i class="icon icon-home"></i></a></li><li><a href="/2019/06/03/The-C++-Programming-Language(7)/"><i class="icon icon-arror-left"></i></a></li><li><a href="/2019/05/21/The-C++-Programming-Language(4)/"><i class="icon icon-arror-right"></i></a></li></ul><div class="page-footer"><div class="top"><ul class="social"><li><a href="https://github.com/MooBlue" title="Github" target="_blank"><i class="icon icon-github"></i></a></li></ul></div><div class="bottom"><p class="copyright">© 2019 Star<br><small>POWER BY <a href="https://hexo.io" target="_blank">HEXO</a></small><small>, THEME BY <a href="https://github.com/BoizZ/hexo-theme-laughing" target="_blank">LAUGHING</a></small></p></div></div></div><script>var wrap = document.getElementById('wrap');
+window.onload = function () {
+  wrap.className += ' done';
+}</script></body></html>
