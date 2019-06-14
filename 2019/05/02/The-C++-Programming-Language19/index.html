@@ -1,0 +1,25 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"><meta name="format-detection" content="telephone=no"><meta name="format-detection" content="email=no"><meta name="description"><meta name="keywords" content="Hexo, Gruntjs, Nodejs, Reactjs, Vuejs"><title>堆与栈间的区别 - Star</title><link rel="stylesheet" href="/css/main_style.min.css"><link rel="icon" href="/favicon.ico"></head><body><input id="navi" type="checkbox"><ul class="main-navication"><li><a href="/"><span>Home</span></a></li><li><a href="https://github.com"><span>Github</span></a></li></ul><div class="wrapper" id="wrap"><div class="post-header"><label class="navi-button light" for="navi">MENU</label><img class="background" src="/img/post_background.jpg"><div class="post-title"><h1 class="title">堆与栈间的区别</h1><ul class="meta"><li><i class="icon icon-author"></i>Lucifer</li><li><i class="icon icon-clock"></i>2 Minutes</li><li><i class="icon icon-calendar"></i>May 2, 2019</li></ul></div></div><div class="article-content" style="max-width:800px"><h3 id="1、内存分配方面："><a href="#1、内存分配方面：" class="headerlink" title="1、内存分配方面："></a>1、内存分配方面：</h3><p>堆（heap） ：一般由程序员分配释放，若程序员不释放，程序结束时可能由OS回收 。<br>栈（stack）：由编译器自动分配释放，存放函数的参数值，局部变量的值等。</p>
+<h3 id="2、申请方式方面："><a href="#2、申请方式方面：" class="headerlink" title="2、申请方式方面："></a>2、申请方式方面：</h3><p>堆（heap） ：需要程序员自己申请，并指明大小。</p>
+<p>例如，在c中malloc函数如 [<code>p1 = (char *)malloc(10)；</code>] </p>
+<p>栈（stack）：由系统自动分配。</p>
+<p>例如，声明在函数中一个局部变量 int b；系统自动在栈中为b开辟空间。</p>
+<h3 id="3、系统响应方面："><a href="#3、系统响应方面：" class="headerlink" title="3、系统响应方面："></a>3、系统响应方面：</h3><p>堆（heap） ：系统收到程序的申请时，会遍历该链表，合适的空间分配给程序。<br>栈（stack）：只要栈的剩余空间大于所申请空间，系统将为程序提供内存，否则将报异常提示栈溢出。</p>
+<h3 id="4、大小限制方面："><a href="#4、大小限制方面：" class="headerlink" title="4、大小限制方面："></a>4、大小限制方面：</h3><p>堆（heap） ：是向高地址扩展的数据结构，是不连续的内存区域。<br>栈（stack）：在Windows下, 栈是向低地址扩展的数据结构，是一块连续的内存的区域。</p>
+<h3 id="5、效率方面："><a href="#5、效率方面：" class="headerlink" title="5、效率方面："></a>5、效率方面：</h3><p>堆（heap） ：是由new分配的内存，一般速度比较慢，而且容易产生内存碎片，不过用起来最方便。<br>栈（stack）：由系统自动分配，速度较快。但程序员是无法控制的。</p>
+<h3 id="6、存放内容方面："><a href="#6、存放内容方面：" class="headerlink" title="6、存放内容方面："></a>6、存放内容方面：</h3><p>堆（heap） ：一般是在堆的头部用一个字节存放堆的大小。堆中的具体内容由程序员安排。<br>栈（stack）：在函数调用时第一个进栈的是主函数中的下一条指令的地址然后是函数的各个参数。</p>
+<h3 id="7、存取效率方面："><a href="#7、存取效率方面：" class="headerlink" title="7、存取效率方面："></a>7、存取效率方面：</h3><h3 id="进程、线程与堆、栈"><a href="#进程、线程与堆、栈" class="headerlink" title="进程、线程与堆、栈"></a>进程、线程与堆、栈</h3><p>现在是多任务系统。每个进程是资源（不含处理器资源）分配的基本单位。每个进程含若干线程。线程是调度执行的基本单位。同一个进程的多个线程可以共享所属进程的资源。程序员可以进行同步控制（多线程编程）。每个进程有一个或几个堆。这要看不同的OS了。程序员要在堆中分配/释放空间，需要malloc/free这样的显式操作。每个线程有一个私有资源，那就是栈。函数调用时，要把返回地址和参数入栈。被调函数执行时，要把参数取出来，赋给形参。被调函数执行完后还要把返回地址取出来，跳回去。栈是自动实现的，不需要程序员干预。（因为编译器实现了）。局部变量也位于栈。</p>
+<h3 id="归纳："><a href="#归纳：" class="headerlink" title="归纳："></a>归纳：</h3><p>堆和栈的区别可以用如下的比喻来看出：</p>
+<p>使用栈就象我们去饭馆里吃饭，只管点菜（发出申请）、付钱、和吃（使用），吃饱了就走，不必理会切菜、洗菜等准备工作和洗碗、刷锅等扫尾工作，他的好处是快捷，但是自由度小。<br>使用堆就象是自己动手做喜欢吃的菜肴，比较麻烦，但是比较符合自己的口味，而且自由度大。</p>
+</div><div class="article-meta" style="max-width:800px"><div class="tags"><i class="icon icon-tag"></i><ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">23</span></li></ul></div></div><div class="article-comment" style="max-width:800px"><div class="ds-thread" id="ds-thread" data-thread-key="cjwvfgp35001ajgxm4biknjc5" data-title="堆与栈间的区别" data-url="http://yoursite.com/2019/05/02/The-C++-Programming-Language19/" site-name="ueibo"></div><script>var siteName = document.getElementById('ds-thread').getAttribute('site-name');
+var duoshuoQuery = {short_name: siteName};
+(function() {
+  var ds = document.createElement('script');
+  ds.type = 'text/javascript';ds.async = true;
+  ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+  ds.charset = 'UTF-8';
+  (document.getElementsByTagName('head')[0] 
+  || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();</script></div><ul class="navication"><li class="home"><a href="/"><i class="icon icon-home"></i></a></li><li><a href="/2019/05/03/The-C++-Programming-Language20/"><i class="icon icon-arror-left"></i></a></li><li><a href="/2019/05/01/The-C++-Programming-Language17/"><i class="icon icon-arror-right"></i></a></li></ul><div class="page-footer"><div class="top"><ul class="social"><li><a href="https://github.com/MooBlue" title="Github" target="_blank"><i class="icon icon-github"></i></a></li></ul></div><div class="bottom"><p class="copyright">© 2019 Star<br><small>POWER BY <a href="https://hexo.io" target="_blank">HEXO</a></small><small>, THEME BY <a href="https://github.com/BoizZ/hexo-theme-laughing" target="_blank">LAUGHING</a></small></p></div></div></div><script>var wrap = document.getElementById('wrap');
+window.onload = function () {
+  wrap.className += ' done';
+}</script></body></html>

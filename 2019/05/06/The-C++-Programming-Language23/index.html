@@ -1,0 +1,35 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"><meta name="format-detection" content="telephone=no"><meta name="format-detection" content="email=no"><meta name="description"><meta name="keywords" content="Hexo, Gruntjs, Nodejs, Reactjs, Vuejs"><title>进程与线程的区别 - Star</title><link rel="stylesheet" href="/css/main_style.min.css"><link rel="icon" href="/favicon.ico"></head><body><input id="navi" type="checkbox"><ul class="main-navication"><li><a href="/"><span>Home</span></a></li><li><a href="https://github.com"><span>Github</span></a></li></ul><div class="wrapper" id="wrap"><div class="post-header"><label class="navi-button light" for="navi">MENU</label><img class="background" src="/img/post_background.jpg"><div class="post-title"><h1 class="title">进程与线程的区别</h1><ul class="meta"><li><i class="icon icon-author"></i>Lucifer</li><li><i class="icon icon-clock"></i>2 Minutes</li><li><i class="icon icon-calendar"></i>May 6, 2019</li></ul></div></div><div class="article-content" style="max-width:800px"><h2 id="进程与线程的区别"><a href="#进程与线程的区别" class="headerlink" title="进程与线程的区别"></a>进程与线程的区别</h2><p>进程：<br>是并发执行的程序在执行过程中分配和管理资源的基本单位，是一个动态概念，竞争计算机系统资源的基本单位。</p>
+<p>线程：<br>是进程的一个执行单元，是进程内可调度实体。比进程更小的独立运行的基本单位。线程也被称为轻量级进程。</p>
+<h3 id="调度"><a href="#调度" class="headerlink" title="调度"></a>调度</h3><p>线程作为调度和分配的基本单位，进程作为拥有资源的基本单位。</p>
+<h3 id="并发性"><a href="#并发性" class="headerlink" title="并发性"></a>并发性</h3><p>不仅进程之间可以并发执行，同一个进程的多个线程之间也可以并发执行。</p>
+<h3 id="拥有资源"><a href="#拥有资源" class="headerlink" title="拥有资源"></a>拥有资源</h3><p>进程是拥有资源的一个独立单位，线程不拥有系统资源，但可以访问隶属于进程的资源。</p>
+<h3 id="系统开销"><a href="#系统开销" class="headerlink" title="系统开销"></a>系统开销</h3><p>在创建或撤销进程时，由于系统都有为之分配和回收资源，导致系统的开销明显大于创建或撤销线程时的开销。</p>
+<h3 id="为什么会有线程？"><a href="#为什么会有线程？" class="headerlink" title="为什么会有线程？"></a>为什么会有线程？</h3><p>每个进程都有自己的地址空间，即进程空间，在网络或多用户环境下，一个服务器通常需要接收大量不确定数量用户的并发请求，为每个请求都创建一个进程显然行不通(系统开销大响应用户请求效率低)，因此操作系统中线程概念被引进。</p>
+<ol>
+<li><p>线程的执行过程是线性的，尽管中间会发生中断或者暂停，但是进程所拥有的资源只为该线状执行过程服务，一旦发生线程切换，这些资源需要被保护起来。</p>
+</li>
+<li><p>进程分为单线程进程和多线程进程，单线程进程宏观来看也是线性执行过程，微观上只有单一的执行过程。多线程进程宏观是线性的，微观上多个执行操作。</p>
+</li>
+</ol>
+<p>线程的改变只代表 CPU 的执行过程的改变，而没有发生进程所拥有的资源的变化。</p>
+<h3 id="进程线程的区别："><a href="#进程线程的区别：" class="headerlink" title="进程线程的区别："></a>进程线程的区别：</h3><p>地址空间：同一进程的线程共享本进程的地址空间，而进程之间则是独立的地址空间。<br>资源拥有：同一进程内的线程共享本进程的资源如内存、I/O、cpu等，但是进程之间的资源是独立的。</p>
+<p>一个进程崩溃后，在保护模式下不会对其他进程产生影响，但是一个线程崩溃整个进程都死掉。所以多进程要比多线程健壮。</p>
+<p>进程切换时，消耗的资源大，效率高。所以涉及到频繁的切换时，使用线程要好于进程。同样如果要求同时进行并且又要共享某些变量的并发操作，只能用线程不能用进程</p>
+<p>执行过程：每个独立的进程程有一个程序运行的入口、顺序执行序列和程序入口。但是线程不能独立执行，必须依存在应用程序中，由应用程序提供多个线程执行控制。<br>线程是处理器调度的基本单位，但是进程不是。<br>两者均可并发执行。</p>
+<h3 id="优缺点："><a href="#优缺点：" class="headerlink" title="优缺点："></a>优缺点：</h3><p>线程执行开销小，但是不利于资源的管理和保护。线程适合在SMP机器（双CPU系统）上运行。</p>
+<p>进程执行开销大，但是能够很好的进行资源管理和保护。进程可以跨机器前移。</p>
+<h3 id="何时使用多进程，何时使用多线程？"><a href="#何时使用多进程，何时使用多线程？" class="headerlink" title="何时使用多进程，何时使用多线程？"></a>何时使用多进程，何时使用多线程？</h3><p>对资源的管理和保护要求高，不限制开销和效率时，使用多进程。</p>
+<p>要求效率高，频繁切换时，资源的保护管理要求不是很高时，使用多线程。</p>
+</div><div class="article-meta" style="max-width:800px"><div class="tags"><i class="icon icon-tag"></i><ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C++</a><span class="tag-list-count">23</span></li></ul></div></div><div class="article-comment" style="max-width:800px"><div class="ds-thread" id="ds-thread" data-thread-key="cjwvfgp2y0012jgxmesz8zqvh" data-title="进程与线程的区别" data-url="http://yoursite.com/2019/05/06/The-C++-Programming-Language23/" site-name="ueibo"></div><script>var siteName = document.getElementById('ds-thread').getAttribute('site-name');
+var duoshuoQuery = {short_name: siteName};
+(function() {
+  var ds = document.createElement('script');
+  ds.type = 'text/javascript';ds.async = true;
+  ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+  ds.charset = 'UTF-8';
+  (document.getElementsByTagName('head')[0] 
+  || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();</script></div><ul class="navication"><li class="home"><a href="/"><i class="icon icon-home"></i></a></li><li><a href="/2019/05/13/The-C++-Programming-Language13/"><i class="icon icon-arror-left"></i></a></li><li><a href="/2019/05/05/The-C++-Programming-Language22/"><i class="icon icon-arror-right"></i></a></li></ul><div class="page-footer"><div class="top"><ul class="social"><li><a href="https://github.com/MooBlue" title="Github" target="_blank"><i class="icon icon-github"></i></a></li></ul></div><div class="bottom"><p class="copyright">© 2019 Star<br><small>POWER BY <a href="https://hexo.io" target="_blank">HEXO</a></small><small>, THEME BY <a href="https://github.com/BoizZ/hexo-theme-laughing" target="_blank">LAUGHING</a></small></p></div></div></div><script>var wrap = document.getElementById('wrap');
+window.onload = function () {
+  wrap.className += ' done';
+}</script></body></html>
